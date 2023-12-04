@@ -64,6 +64,10 @@ struct sched_param {
 #endif
 };
 
+/* Espressif-specific */
+int sched_yield( void );
+/* ~Espressif-specific */
+
 _END_STD_C
 
 #endif
