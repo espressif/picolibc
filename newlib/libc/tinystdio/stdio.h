@@ -143,9 +143,15 @@ typedef __FILE FILE;
 */
 #define PICOLIBC_STDIO_GLOBALS
 
-extern FILE *const stdin;
-extern FILE *const stdout;
-extern FILE *const stderr;
+#ifdef _WANT_MUTABLE_STDIO
+#define PICOLIBC_STDIO_QUALIFIER
+#else
+#define PICOLIBC_STDIO_QUALIFIER const
+#endif
+
+extern FILE *PICOLIBC_STDIO_QUALIFIER stdin;
+extern FILE *PICOLIBC_STDIO_QUALIFIER stdout;
+extern FILE *PICOLIBC_STDIO_QUALIFIER stderr;
 
 /* The stdin, stdout, and stderr symbols are described as macros in the C
  * standard. */

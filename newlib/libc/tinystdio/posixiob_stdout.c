@@ -39,7 +39,7 @@ static char write_buf[BUFSIZ];
 
 static struct __file_bufio __stdout = FDEV_SETUP_POSIX(1, write_buf, BUFSIZ, __SWR, __BLBF);
 
-FILE *const __posix_stdout = &__stdout.xfile.cfile.file;
+FILE *PICOLIBC_STDIO_QUALIFIER __posix_stdout = &__stdout.xfile.cfile.file;
 
 __weak_reference(__posix_stdout,stdout);
 

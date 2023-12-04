@@ -35,8 +35,8 @@
 #include "../stdlib/mul_overflow.h"
 #endif
 
-extern FILE *const stdin _ATTRIBUTE((__weak__));
-extern FILE *const stdout _ATTRIBUTE((__weak__));
+extern FILE *PICOLIBC_STDIO_QUALIFIER stdin _ATTRIBUTE((__weak__));
+extern FILE *PICOLIBC_STDIO_QUALIFIER stdout _ATTRIBUTE((__weak__));
 
 size_t
 fread(void *ptr, size_t size, size_t nmemb, FILE *stream)

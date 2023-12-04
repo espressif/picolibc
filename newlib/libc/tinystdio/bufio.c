@@ -149,8 +149,8 @@ bail:
 	return ret;
 }
 
-extern FILE *const stdin _ATTRIBUTE((__weak__));
-extern FILE *const stdout _ATTRIBUTE((__weak__));
+extern FILE *PICOLIBC_STDIO_QUALIFIER stdin _ATTRIBUTE((__weak__));
+extern FILE *PICOLIBC_STDIO_QUALIFIER stdout _ATTRIBUTE((__weak__));
 
 int
 __bufio_get(FILE *f)
