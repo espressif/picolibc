@@ -143,9 +143,9 @@ typedef __FILE FILE;
 */
 #define PICOLIBC_STDIO_GLOBALS
 
-extern FILE *const stdin;
-extern FILE *const stdout;
-extern FILE *const stderr;
+extern FILE *stdin;
+extern FILE *stdout;
+extern FILE *stderr;
 
 #define EOF	(-1)
 
