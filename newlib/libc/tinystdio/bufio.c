@@ -263,7 +263,7 @@ __bufio_close(FILE *f)
 
 	__bufio_lock_close(f);
 	/* Don't close stdin/stdout/stderr fds */
-	if (bf->fd > 2)
+	// if (bf->fd > 2)
 		(bf->close)(bf->fd);
 	free(f);
 	return ret;
