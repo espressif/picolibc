@@ -48,6 +48,9 @@ srcs_libm_machine = [
   'fesetround.c',
   'fetestexcept.c',
   'feupdateenv.c',
+  'sf_sqrt.c',
 ]
+
+conf_data.set('_LIBM', '1')
 
 src_libm_machine = files(srcs_libm_machine)

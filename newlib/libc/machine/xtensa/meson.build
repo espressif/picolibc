@@ -43,9 +43,7 @@ srcs_machine = [
   'strncpy.S',
 ]
 
-conf_data.set('_XTENSA_HAVE_CONFIG_CORE_ISA_H',
-	      cc.check_header('xtensa/config/core-isa.h'),
-	      description: 'Xtensa toolchain includes core-isa.h')
+conf_data.set('_LIBC', '1')
 
 subdir('sys')
 subdir('machine')

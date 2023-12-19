@@ -463,6 +463,3 @@
 #define __PICOLIBC__ @PROJECT_VERSION_MAJOR@
 
 #cmakedefine __SINGLE_THREAD__
-
-/* Compiler has Xtensa-specific core-isa.h header file */
-#cmakedefine _XTENSA_HAVE_CONFIG_CORE_ISA_H

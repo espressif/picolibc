@@ -47,4 +47,5 @@ picolibc_sources(
   fesetround.c
   fetestexcept.c
   feupdateenv.c
+  sf_sqrt.c
   )
