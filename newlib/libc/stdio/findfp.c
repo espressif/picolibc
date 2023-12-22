@@ -28,14 +28,14 @@
 
 void (*__stdio_exit_handler) (void);
 
-__FILE __sf[3];
+__FILE __sf[2];
 
-struct _glue __sglue = {NULL, 3, &__sf[0]};
+struct _glue __sglue = {NULL, 2, &__sf[0]};
 
 #ifdef _REENT_THREAD_LOCAL
 NEWLIB_THREAD_LOCAL __FILE *_tls_stdin = &__sf[0];
 NEWLIB_THREAD_LOCAL __FILE *_tls_stdout = &__sf[1];
-NEWLIB_THREAD_LOCAL __FILE *_tls_stderr = &__sf[2];
+NEWLIB_THREAD_LOCAL __FILE *_tls_stderr = &__sf[1];
 NEWLIB_THREAD_LOCAL void (*_tls_cleanup)(void);
 #endif
 
@@ -89,7 +89,7 @@ std (FILE *ptr,
   ptr->_close = NULL;
 #endif /* _STDIO_CLOSE_STD_STREAMS */
 #ifndef __SINGLE_THREAD__
-  if (ptr == &__sf[0] || ptr == &__sf[1] || ptr == &__sf[2])
+  if (ptr == &__sf[0] || ptr == &__sf[1])
     __lock_init_recursive (ptr->_lock);
 #endif
 #ifdef __SCLE
@@ -118,14 +118,6 @@ stdout_init(FILE *ptr)
 #else
   std (ptr, __SWR | __SLBF, 1);
 #endif
-}
-
-static inline void
-stderr_init(FILE *ptr)
-{
-  /* POSIX requires stderr to be opened for reading and writing, even
-     when the underlying fd 2 is write-only.  */
-  std (ptr, __SRW | __SNBF, 2);
 }
 
 #ifdef __GNUC__
@@ -168,7 +160,6 @@ global_stdio_init (void)
     __stdio_exit_handler = stdio_exit_handler;
     stdin_init (&__sf[0]);
     stdout_init (&__sf[1]);
-    stderr_init (&__sf[2]);
   }
 }
 
@@ -239,8 +230,6 @@ cleanup_stdio (void)
     CLEANUP_FILE (_REENT_STDIN(ptr));
   if (_REENT_STDOUT(ptr) != &__sf[1])
     CLEANUP_FILE (_REENT_STDOUT(ptr));
-  if (_REENT_STDERR(ptr) != &__sf[2])
-    CLEANUP_FILE (_REENT_STDERR(ptr));
 }
 
 /*

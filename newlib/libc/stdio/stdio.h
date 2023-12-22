@@ -181,7 +181,7 @@ typedef struct __sFILE   __FILE;
 #endif /* __LARGE64_FILES */
 #endif /* !__CUSTOM_FILE_IO__ */
 
-extern __FILE __sf[3];
+extern __FILE __sf[2];
 
 extern NEWLIB_THREAD_LOCAL __FILE *_tls_stdin;
 #define _REENT_STDIN(_ptr) (_tls_stdin)
