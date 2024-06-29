@@ -125,6 +125,8 @@ SEEALSO
 #include "../locale/setlocale.h"
 #endif
 
+int VFWPRINTF (FILE *, const wchar_t *, va_list);
+
 /* Currently a test is made to see if long double processing is warranted.
    This could be changed in the future should the __ldtoa code be
    preferred over __dtoa.  */
@@ -188,7 +190,7 @@ __sbwprintf (
 #endif
 
 	/* do the work, then copy any error status */
-	ret = _VFWPRINTF_R (rptr, &fake, fmt, ap);
+	ret = VFWPRINTF (&fake, fmt, ap);
 	if (ret >= 0 && fflush ( &fake))
 		ret = EOF;
 	if (fake._flags & __SERR)
@@ -578,7 +580,7 @@ VFWPRINTF (
 	if ((fp->_flags & (__SNBF|__SWR|__SRW)) == (__SNBF|__SWR) &&
 	    fp->_file >= 0) {
 		_newlib_flockfile_exit (fp);
-		return (__sbwprintf (data, fp, fmt0, ap));
+		return (__sbwprintf (fp, fmt0, ap));
 	}
 #endif
 #else /* STRING_ONLY */

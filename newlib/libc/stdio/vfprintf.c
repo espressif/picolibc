@@ -861,7 +861,7 @@ VFPRINTF (
 	if ((fp->_flags & (__SNBF|__SWR|__SRW)) == (__SNBF|__SWR) &&
 	    fp->_file >= 0) {
 		_newlib_flockfile_exit (fp);
-		return (__sbprintf (data, fp, fmt0, ap));
+		return (__sbprintf (NULL, fp, fmt0, ap));
 	}
 #endif
 #else /* STRING_ONLY */
