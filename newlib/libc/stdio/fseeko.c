@@ -248,7 +248,7 @@ fseeko (
 	curoff = fp->_offset;
       else
 	{
-	  curoff = seekfn (ptr, fp->_cookie, 0L, SEEK_CUR);
+	  curoff = seekfn (fp->_cookie, 0L, SEEK_CUR);
 	  if (curoff == POS_ERR)
 	    goto dumb;
 	}
@@ -308,7 +308,7 @@ fseeko (
    */
 
   curoff = target & ~(fp->_blksize - 1);
-  if (seekfn (ptr, fp->_cookie, curoff, SEEK_SET) == POS_ERR)
+  if (seekfn (fp->_cookie, curoff, SEEK_SET) == POS_ERR)
     goto dumb;
   fp->_r = 0;
   fp->_p = fp->_bf._base;
