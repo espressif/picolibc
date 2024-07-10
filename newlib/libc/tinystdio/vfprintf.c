@@ -416,7 +416,9 @@ skip_to_arg(const CHAR *fmt_orig, my_va_list *ap, int target_argno)
 }
 #endif
 
-int vfprintf (FILE * stream, const CHAR *fmt, va_list ap_orig)
+FILE_FN_UNLOCKED_SPECIFIER
+int
+FILE_FN_UNLOCKED(vfprintf)(FILE * stream, const CHAR *fmt, va_list ap_orig)
 {
     unsigned c;		/* holds a char from the format string */
     uint16_t flags;
@@ -1207,6 +1209,18 @@ int vfprintf (FILE * stream, const CHAR *fmt, va_list ap_orig)
     stream_len = -1;
     goto ret;
 }
+
+#ifdef _WANT_FLOCKFILE
+int
+vfprintf(FILE * stream, const CHAR *fmt, va_list ap_orig)
+{
+    int ret;
+    __flockfile(stream);
+    ret = FILE_FN_UNLOCKED(vfprintf)(stream, fmt, ap_orig);
+    __funlockfile(stream);
+    return ret;
+}
+#endif
 
 #if defined(_FORMAT_DEFAULT_DOUBLE) && !defined(vfprintf)
 #ifdef _HAVE_ALIAS_ATTRIBUTE

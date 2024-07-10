@@ -64,6 +64,7 @@ srcs_tinystdio = [
   'filestrputalloc.c',
   'filestrput.c',
   'filewstrget.c',
+  'flockfile.c',
   'fmemopen.c',
   'fprintf.c',
   'fputc.c',

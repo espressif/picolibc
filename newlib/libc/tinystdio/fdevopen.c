@@ -83,8 +83,10 @@ static int
 fdevclose(FILE *f)
 {
 	int ret = 0;
+
 	if  (f->flush)
 		ret = (*f->flush)(f);
+
 	free(f);
 	return ret;
 }
@@ -113,6 +115,8 @@ fdevopen(int (*put)(char, FILE *), int (*get)(FILE *), int (*flush)(FILE *))
 		cf->file.flush = flush;
 		cf->file.flags |= __SWR;
 	}
+
+    __flockfile_init(&(cf->file));
 
 	return (FILE *) cf;
 }

@@ -284,6 +284,7 @@ printf_small_ultoa = tinystdio and get_option('printf-small-ultoa')
 minimal_io_long_long = tinystdio and get_option('minimal-io-long-long')
 fast_bufio = tinystdio and get_option('fast-bufio')
 mutable_stdio = get_option('mutable-stdio')
+flockfile = posix_io and get_option('flockfile')
 
 if printf_aliases
   double_printf_compile_args=['-DPICOLIBC_DOUBLE_PRINTF_SCANF']
@@ -1253,6 +1254,7 @@ conf_data.set('_ASSERT_VERBOSE', get_option('assert-verbose'))
 
 if tinystdio
     conf_data.set('_WANT_MUTABLE_STDIO', mutable_stdio)
+    conf_data.set('_WANT_FLOCKFILE', flockfile)
 endif
 
 if not tinystdio

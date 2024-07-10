@@ -51,8 +51,8 @@ typedef long int_scanf_t;
 #define INT wint_t
 #define CHAR wchar_t
 #define UCHAR wchar_t
-#define GETC(s) getwc(s)
-#define UNGETC(c,s) ungetwc(c,s)
+#define GETC(s) FILE_FN_UNLOCKED(getwc)(s)
+#define UNGETC(c,s) FILE_FN_UNLOCKED(ungetwc)(c,s)
 #undef vfscanf
 #define vfscanf vfwscanf
 #define IS_EOF(c)       ((c) == WEOF)
@@ -60,8 +60,8 @@ typedef long int_scanf_t;
 #define INT int
 #define CHAR char
 #define UCHAR unsigned char
-#define GETC(s) getc(s)
-#define UNGETC(c,s) ungetc(c,s)
+#define GETC(s) FILE_FN_UNLOCKED(fgetc)(s)
+#define UNGETC(c,s) FILE_FN_UNLOCKED(ungetc)(c,s)
 #define IS_EOF(c)       ((c) < 0)
 #endif
 

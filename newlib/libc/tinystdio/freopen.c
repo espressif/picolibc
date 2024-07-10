@@ -38,38 +38,43 @@
 FILE *
 freopen(const char *pathname, const char *mode, FILE *stream)
 {
+    FILE *ret = NULL;
 	struct __file_bufio *pf = (struct __file_bufio *) stream;
 	int fd;
 	int stdio_flags;
 	int open_flags;
 
-        /* Can't reopen FILEs which aren't buffered */
-        if (!(stream->flags & __SBUF))
-            return NULL;
-
 	stdio_flags = __posix_sflags(mode, &open_flags);
 	if (stdio_flags == 0)
 		return NULL;
 
+    __flockfile(stream);
+
+	/* Can't reopen FILEs which aren't buffered */
+	if (!(stream->flags & __SBUF))
+		goto exit;
+
 	fd = open(pathname, open_flags, 0666);
 	if (fd < 0)
-		return NULL;
+		goto exit;
 
-        fflush(stream);
+	fflush(stream);
 
-        __bufio_lock(stream);
-        close(pf->fd);
-        stream->flags = (stream->flags & ~(__SRD|__SWR|__SERR|__SEOF)) | stdio_flags;
-        pf->pos = 0;
-        pf->fd = fd;
+	__bufio_lock(stream);
+	close(pf->fd);
+	stream->flags = (stream->flags & ~(__SRD|__SWR|__SERR|__SEOF)) | stdio_flags;
+	pf->pos = 0;
+	pf->fd = fd;
 
-        /* Switch to POSIX backend */
-        pf->read = read;
-        pf->write = write;
-        pf->lseek = lseek;
-        pf->close = close;
+	/* Switch to POSIX backend */
+	pf->read = read;
+	pf->write = write;
+	pf->lseek = lseek;
+	pf->close = close;
 
-        __bufio_unlock(stream);
+	__bufio_unlock(stream);
 
-        return stream;
+exit:
+    __funlockfile(stream);
+	return ret;
 }

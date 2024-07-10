@@ -39,8 +39,9 @@
 #define FSEEK_TYPE long
 #endif
 
+FILE_FN_UNLOCKED_SPECIFIER
 FSEEK_TYPE
-ftell(FILE *stream)
+FILE_FN_UNLOCKED(ftell)(FILE *stream)
 {
         struct __file_ext *xf = (struct __file_ext *) stream;
         if ((stream->flags & __SEXT) && xf->seek)
@@ -48,3 +49,15 @@ ftell(FILE *stream)
         errno = ESPIPE;
 	return -1;
 }
+
+#if defined(_WANT_FLOCKFILE) && !defined(_FILE_INCLUDED)
+FSEEK_TYPE
+ftell(FILE *stream)
+{
+    FSEEK_TYPE ret;
+    __flockfile(stream);
+    ret = FILE_FN_UNLOCKED(ftell)(stream);
+    __funlockfile(stream);
+    return ret;
+}
+#endif
