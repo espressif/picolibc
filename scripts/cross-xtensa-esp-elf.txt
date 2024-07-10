@@ -1,0 +1,15 @@
+[binaries]
+c = ['ccache', 'xtensa-esp-elf-gcc']
+ar = 'xtensa-esp-elf-ar'
+as = 'xtensa-esp-elf-as'
+nm = 'xtensa-esp-elf-nm'
+strip = 'xtensa-esp-elf-strip'
+
+[host_machine]
+system = 'unknown'
+cpu_family = 'xtensa'
+cpu = 'xtensa'
+endian = 'little'
+
+[properties]
+skip_sanity_check = true
