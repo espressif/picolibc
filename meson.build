@@ -1696,6 +1696,15 @@ configure_file(output : 'picolibc.h',
 	       configuration: conf_data,
 	       install_dir: include_dir)
 
+host_cc_machine=run_command(cc.cmd_array() + ['-dumpmachine'], check : true).stdout().strip().split('-')
+host_manufacturer=host_cc_machine[1]
+message('Computed host_manufacturer as ' + host_manufacturer)
+
+if host_manufacturer == 'esp'
+  install_headers(['newlib/libc/sys/esp/include/sys/dirent.h'],
+		install_dir: include_dir / 'sys' )
+endif
+
 # Usage as an embedded subproject:
 # If picolibc is embedded into the source as a subproject,
 # provide a dependency to be used by the main project:
