@@ -38,3 +38,10 @@ inc_sys_headers_machine = [
 
 install_headers(inc_sys_headers_machine,
 		install_dir: include_dir / 'sys')
+
+inc_core_isa_headers = [
+  'core-isa.h'
+]
+
+install_headers(inc_core_isa_headers,
+		install_dir: include_dir / 'xtensa' / 'config')
