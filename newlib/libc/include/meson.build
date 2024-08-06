@@ -73,6 +73,7 @@ inc_headers = [
   'memory.h',
   'newlib.h',
   'paths.h',
+  'pthread.h',
   'pwd.h',
   'regdef.h',
   'regex.h',
