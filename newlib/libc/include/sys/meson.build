@@ -50,6 +50,7 @@ inc_sys_headers_all = [
   '_locale.h',
   'lock.h',
   'param.h',
+  '_pthreadtypes.h',
   'queue.h',
   'resource.h',
   'sched.h',
