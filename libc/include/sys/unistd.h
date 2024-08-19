@@ -533,6 +533,8 @@ int     unlinkat(int, const char *, int) __picolibc_export;
 #define _SC_LEVEL4_CACHE_ASSOC           135
 #define _SC_LEVEL4_CACHE_LINESIZE        136
 #define _SC_POSIX_26_VERSION             137
+#define _SC_NPROCESSORS_CONF             138
+#define _SC_NPROCESSORS_ONLN             139
 
 /*
  *  pathconf values per IEEE Std 1003.1, 2008 Edition
