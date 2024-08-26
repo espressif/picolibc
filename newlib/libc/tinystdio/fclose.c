@@ -34,6 +34,10 @@
 int
 fclose(FILE *f)
 {
+    if (!f) {
+        return 0;
+    }
+
         struct __file_close *cf = (struct __file_close *) f;
 
 #ifdef __STDIO_LOCKING
