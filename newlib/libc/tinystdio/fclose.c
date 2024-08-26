@@ -35,6 +35,9 @@ int
 fclose(FILE *f)
 {
     int ret = 0;
+    if (!f)
+        return 0;
+
 #ifdef _WANT_FLOCKFILE
     FILE f_copy;
     f_copy.lock = f->lock;
