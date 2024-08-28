@@ -35,33 +35,4 @@
 
 #include "stdio_private.h"
 
-#ifndef __PICOLIBC_STDERR_BUFSIZ
-#define __PICOLIBC_STDERR_BUFSIZ 1
-#endif
-
-static char write_buf[__PICOLIBC_STDERR_BUFSIZ];
-
-static struct __file_bufio __stderr = FDEV_SETUP_POSIX(1, write_buf, __PICOLIBC_STDERR_BUFSIZ, __SWR, __BLBF);
-
-FILE *PICOLIBC_STDIO_QUALIFIER __posix_stderr = &__stderr.xfile.cfile.file;
-
-__weak_reference(__posix_stderr,stderr);
-
-__attribute__((constructor))
-static void posix_init(void)
-{
-    __flockfile_init(&__stderr.xfile.cfile.file);
-    __bufio_lock_init(&__stderr.xfile.cfile.file);
-}
-
-#if __PICOLIBC_STDERR_BUFSIZE > 1
-/*
- * Add a destructor function to get stderr flushed on
- * exit
- */
-__attribute__((destructor (101)))
-static void posix_exit(void)
-{
-    fflush(stderr);
-}
-#endif
+FILE *stderr;

@@ -35,17 +35,4 @@
 
 #include "stdio_private.h"
 
-static char read_buf[BUFSIZ];
-
-static struct __file_bufio __stdin = FDEV_SETUP_POSIX(0, read_buf, BUFSIZ, __SRD, 0);
-
-FILE *PICOLIBC_STDIO_QUALIFIER __posix_stdin = &__stdin.xfile.cfile.file;
-
-__weak_reference(__posix_stdin,stdin);
-
-__attribute__((constructor))
-static void posix_init(void)
-{
-    __flockfile_init(&__stdin.xfile.cfile.file);
-    __bufio_lock_init(&__stdin.xfile.cfile.file);
-}
+FILE *stdin;

@@ -35,27 +35,4 @@
 
 #include "stdio_private.h"
 
-static char write_buf[BUFSIZ];
-
-static struct __file_bufio __stdout = FDEV_SETUP_POSIX(1, write_buf, BUFSIZ, __SWR, __BLBF);
-
-FILE *PICOLIBC_STDIO_QUALIFIER __posix_stdout = &__stdout.xfile.cfile.file;
-
-__weak_reference(__posix_stdout,stdout);
-
-__attribute__((constructor))
-static void posix_init(void)
-{
-    __flockfile_init(&__stdout.xfile.cfile.file);
-    __bufio_lock_init(&__stdout.xfile.cfile.file);
-}
-
-/*
- * Add a destructor function to get stdout flushed on
- * exit
- */
-__attribute__((destructor (101)))
-static void posix_exit(void)
-{
-    fflush(stdout);
-}
+FILE *stdout;
