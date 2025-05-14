@@ -159,8 +159,8 @@ bail:
 	return ret;
 }
 
-extern FILE *const stdin __weak;
-extern FILE *const stdout __weak;
+extern FILE *stdin __weak;
+extern FILE *stdout __weak;
 
 int
 __bufio_get(FILE *f)
