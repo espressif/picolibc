@@ -84,6 +84,8 @@ inc_sys_headers = []
 foreach file : inc_sys_headers_all
   if file in inc_sys_headers_machine
     message('libc/include/sys/' + file + ': machine overrides generic')
+  elif file in inc_sys_headers_vendor
+    message('libc/include/sys/' + file + ': vendor overrides generic')
   elif file in inc_sys_headers_os
     message('libc/include/sys/' + file + ': os overrides generic')
   else

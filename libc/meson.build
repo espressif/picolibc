@@ -45,6 +45,7 @@ endif
 libnames = libdirs
 
 inc_sys_headers_machine = []
+inc_sys_headers_vendor = []
 inc_machine_headers_machine = []
 srcs_machine = []
 
@@ -59,6 +60,11 @@ endif
 foreach libdir : libdirs
   subdir(libdir)
 endforeach
+
+vendor_dir = 'vendor' / host_vendor
+if host_vendor != '' and fs.is_dir(vendor_dir)
+  subdir(vendor_dir)
+endif
 
 src_cpart = []
 

@@ -112,6 +112,18 @@ cpu_family_aliases = {
 # Check for an alias, default to provided name
 host_cpu_family = cpu_family_aliases.get(host_machine.cpu_family(), host_machine.cpu_family())
 
+# Select vendor-specific overlays from the compiler target tuple.
+host_vendor = meson.get_external_property('vendor', '')
+if host_vendor == '' and (compiler_id == 'gcc' or compiler_id == 'clang')
+  host_cc_machine_result = run_command(cc.cmd_array() + ['-dumpmachine'], check : false)
+  if host_cc_machine_result.returncode() == 0
+    host_cc_machine = host_cc_machine_result.stdout().strip().split('-')
+    if host_cc_machine.length() > 1
+      host_vendor = host_cc_machine[1]
+    endif
+  endif
+endif
+
 # Make sure we have meson build support for the machine-specific files
 if not fs.is_file('libc/machine' / host_cpu_family / 'meson.build')
   message = '''
@@ -1631,6 +1643,12 @@ conf_data.set('__NEWLIB_MINOR__', NEWLIB_MINOR_VERSION, description: 'The newlib
 conf_data.set('__NEWLIB_PATCHLEVEL__', NEWLIB_PATCHLEVEL_VERSION, description: 'The newlib patch level.')
 
 inc_dirs = ['libc/stdio', 'libc/locale', '.', 'libc/include']
+
+vendor_include_dir = 'libc/vendor' / host_vendor / 'include'
+if host_vendor != '' and fs.is_dir(vendor_include_dir)
+  message('Using ' + host_vendor + ' vendor header overlay')
+  inc_dirs = [vendor_include_dir] + inc_dirs
+endif
 
 machine_dir = 'libc/machine' / host_cpu_family
 if fs.is_dir(machine_dir)

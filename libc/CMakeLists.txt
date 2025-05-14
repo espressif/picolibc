@@ -35,6 +35,12 @@
 
 add_subdirectory(machine)
 
+if(PICOLIBC_TARGET_VENDOR AND
+   EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/vendor/${PICOLIBC_TARGET_VENDOR}/CMakeLists.txt)
+  message(STATUS "Using ${PICOLIBC_TARGET_VENDOR} vendor header overlay")
+  add_subdirectory(vendor/${PICOLIBC_TARGET_VENDOR})
+endif()
+
 add_subdirectory(include)
 
 add_subdirectory(argz)
