@@ -36,7 +36,7 @@
 libdirs = ['argz', 'ctype', 'errno', 'iconv', 'locale',
            'misc', 'posix', 'search', 'signal', 'ssp',
            'stdio', 'stdlib', 'string', 'time', 'xdr',
-           'uchar', 'ubsan']
+           'uchar', 'ubsan', 'nosys']
 
 libnames = libdirs
 
