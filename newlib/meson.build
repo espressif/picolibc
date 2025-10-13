@@ -34,8 +34,9 @@
 #
 subdir('libc')
 subdir('libm')
+subdir('nosys')
 
-libnames = ['cpart', 'mpart']
+libnames = ['cpart', 'mpart', 'nosyspart']
 
 libsrcs = []
 
