@@ -336,7 +336,7 @@ extern "C" {
 
 #if defined(_ISOC23_SOURCE) || \
   (__STDC_VERSION__ - 0) > 201710L || (__cplusplus - 0) >= 202002L
-#define __ISO_C_VISIBLE		2023
+#define __ISO_C_VISIBLE		2020
 #elif defined(_ISOC11_SOURCE) || \
   (__STDC_VERSION__ - 0) >= 201112L || (__cplusplus - 0) >= 201103L
 #define	__ISO_C_VISIBLE		2011
@@ -365,9 +365,7 @@ extern "C" {
 #define	__MISC_VISIBLE		0
 #endif
 
-#if (_POSIX_C_SOURCE - 0) >= 202405L
-#define	__POSIX_VISIBLE		202405
-#elif (_POSIX_C_SOURCE - 0) >= 200809L
+#if (_POSIX_C_SOURCE - 0) >= 200809L
 #define	__POSIX_VISIBLE		200809
 #elif (_POSIX_C_SOURCE - 0) >= 200112L
 #define	__POSIX_VISIBLE		200112
