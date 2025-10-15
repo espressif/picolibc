@@ -603,6 +603,15 @@ isystem_gen = gen_format.format(gen_include_dir)
 
 specs_isystem = '-isystem ' + specs_option_format.format(isystem_prefix, isystem_buildtype, isystem_gen)
 
+gcc_dumpmachine = run_command(cc.cmd_array() + ['-dumpmachine'], check : true).stdout().split('\n')[0]
+
+cxxconfig_path_postfix = '..' / gcc_dumpmachine / 'include' / 'c++' / '%(version)' / gcc_dumpmachine / '%M'
+cxxconfig_isystem_prefix = isystem_prefix / cxxconfig_path_postfix
+cxxconfig_isystem_buildtype = isystem_buildtype / cxxconfig_path_postfix
+cxxconfig_isystem_gen = isystem_gen / cxxconfig_path_postfix
+
+specs_isystem = specs_isystem + ' -isystem ' + specs_option_format.format(cxxconfig_isystem_prefix, cxxconfig_isystem_buildtype, cxxconfig_isystem_gen)
+
 #
 # Build the non-multilib -L value
 #
@@ -622,7 +631,13 @@ specs_libpath = '-L' + specs_option_format.format(lib_prefix, lib_buildtype, lib
 # Build the non-multilib libgcc -L value
 #
 
-libgcc_dir = get_option('libgccdir') / '%(version)'
+libgccdir_option = get_option('libgccdir')
+if libgccdir_option != ''
+  libgcc_dir = libgccdir_option / '%(version)'
+else
+  libgcc_dir = 'lib' / 'gcc' / gcc_dumpmachine / '%(version)'
+endif
+
 prefix_libgcc_dir = '%*/@0@'.format(libgcc_dir)
 libgcc_prefix = picolibc_prefix_format.format(prefix_libgcc_dir)
 
