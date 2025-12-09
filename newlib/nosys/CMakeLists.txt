@@ -10,7 +10,6 @@ picolibc_sources(
   fcntl.c
   fork.c
   fstat.c
-  fstatvfs.c
   ftw.c
   getcwd.c
   getentropy.c
@@ -34,7 +33,6 @@ picolibc_sources(
   sched_yield.c
   seekdir.c
   stat.c
-  statvfs.c
   telldir.c
   truncate.c
   time.c
