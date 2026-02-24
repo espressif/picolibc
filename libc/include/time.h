@@ -76,12 +76,6 @@ struct tm {
     int tm_wday;
     int tm_yday;
     int tm_isdst;
-#ifdef __TM_GMTOFF
-    long __TM_GMTOFF;
-#endif
-#ifdef __TM_ZONE
-    const char *__TM_ZONE;
-#endif
 };
 
 #if __POSIX_VISIBLE
@@ -177,12 +171,12 @@ typedef __pid_t pid_t; /* process id */
 
 /* defines for the opengroup specifications Derived from Issue 1 of the SVID.  */
 #if __SVID_VISIBLE || __XSI_VISIBLE
-extern long _timezone;
-extern int  _daylight;
+extern long timezone;
+extern int  daylight;
 #endif
 
 #if __POSIX_VISIBLE
-extern char *tzname[2];
+extern char * const tzname[2];
 #endif /* __POSIX_VISIBLE */
 
 char *asctime(const struct tm *_tblock);
