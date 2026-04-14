@@ -97,18 +97,6 @@ picocrt_variants = [
     'src': src_picocrt_none,
   },
   {
-    'name': 'semihost',
-    'suffix': '-semihost',
-    'c_args':  ['-DCRT0_EXIT', '-DCRT0_SEMIHOST'],
-    'src': src_picocrt,
-  },
-  {
-    'name': 'noflash-semihost',
-    'suffix': '-noflash-semihost',
-    'c_args': ['-DINIT_TLS', '-DNO_FLASH', '-DCRT0_EXIT', '-DCRT0_SEMIHOST'],
-    'src': src_picocrt,
-  },
-  {
     'name': 'noflash-hosted',
     'suffix': '-noflash-hosted',
     'c_args': ['-DCRT0_HOSTED', '-DINIT_TLS', '-DNO_FLASH', '-DCRT0_EXIT'],
@@ -116,9 +104,23 @@ picocrt_variants = [
   },
 ]
 
-# Use the semihost version of crt0 for testing as that
-# will have exception handling
-crt0_test = 'crt0_semihost'
+if get_option('semihost')
+  picocrt_variants += {
+    'name': 'semihost',
+    'suffix': '-semihost',
+    'c_args':  ['-DCRT0_EXIT', '-DCRT0_SEMIHOST'],
+    'src': src_picocrt,
+  }
+  picocrt_variants += {
+    'name': 'noflash-semihost',
+    'suffix': '-noflash-semihost',
+    'c_args': ['-DINIT_TLS', '-DNO_FLASH', '-DCRT0_EXIT', '-DCRT0_SEMIHOST'],
+    'src': src_picocrt,
+  }
+  # Use the semihost version of crt0 for testing as that
+  # will have exception handling
+  crt0_test = 'crt0_semihost'
+endif
 
 if thread_local_storage
   picocrt_variants += {
@@ -127,12 +129,14 @@ if thread_local_storage
                        'c_args': ['-DINIT_TLS'],
                        'src': src_picocrt,
                      }
-  picocrt_variants += {
-    'name': 'inittls-semihost',
-    'suffix': '-inittls-semihost',
-    'c_args': ['-DINIT_TLS', '-DCRT0_EXIT', '-DCRT0_SEMIHOST'],
-    'src': src_picocrt,
-  }
+  if get_option('semihost')
+    picocrt_variants += {
+      'name': 'inittls-semihost',
+      'suffix': '-inittls-semihost',
+      'c_args': ['-DINIT_TLS', '-DCRT0_EXIT', '-DCRT0_SEMIHOST'],
+      'src': src_picocrt,
+    }
+  endif
 endif
 
 foreach params : targets
@@ -153,7 +157,7 @@ foreach params : targets
       _src = variant['src']
       _c_args = target_c_args + arg_fnobuiltin + ['-ffreestanding', '-DMACHINE_' + machine['name']] + variant['c_args']
       _link_args = target_c_args + ['-r', '-ffreestanding']
-      
+
       # The normal variant does not call 'exit' after return from main (c lingo: freestanding execution environment)
 
       if meson.version().version_compare('>=1.10')
