@@ -74,6 +74,7 @@ picolibc_headers(""
   newlib.h
   paths.h
   picotls.h
+  pthread.h
   pwd.h
   regdef.h
   regex.h
