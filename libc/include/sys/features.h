@@ -469,6 +469,16 @@ extern "C" {
 #define _POSIX_VERSION     199009L
 #endif
 
+/* Espressif-specific */
+#define _POSIX_THREADS                          1
+#define _POSIX_TIMEOUTS                         1
+#define _POSIX_TIMERS                           1
+#define _POSIX_MONOTONIC_CLOCK                  200112L
+#define _POSIX_CLOCK_SELECTION                  200112L
+#define _UNIX98_THREAD_MUTEX_ATTRIBUTES         1
+#define _POSIX_READER_WRITER_LOCKS              200112L
+/* ~Espressif-specific */
+
 #ifdef __cplusplus
 }
 #endif

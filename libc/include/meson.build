@@ -72,6 +72,7 @@ inc_headers = [
   'newlib.h',
   'paths.h',
   'poll.h',
+  'pthread.h',
   'pwd.h',
   'regdef.h',
   'regex.h',

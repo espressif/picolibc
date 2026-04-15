@@ -50,6 +50,7 @@ picolibc_headers(sys
   _locale.h
   lock.h
   param.h
+  _pthreadtypes.h
   queue.h
   resource.h
   sched.h

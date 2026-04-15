@@ -52,6 +52,7 @@ inc_sys_headers_all = [
   'lock.h',
   'mman.h',
   'param.h',
+  '_pthreadtypes.h',
   'queue.h',
   'resource.h',
   'sched.h',
