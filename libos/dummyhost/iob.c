@@ -47,8 +47,8 @@ static FILE __stdio = FDEV_SETUP_STREAM(dummy_putc, NULL, NULL, _FDEV_SETUP_WRIT
 #ifdef __strong_reference
 #define STDIO_ALIAS(x) __strong_reference(stdout, x);
 #else
-#define STDIO_ALIAS(x) FILE * const x = &__stdio;
+#define STDIO_ALIAS(x) FILE * x = &__stdio;
 #endif
 
-FILE * const stdout = &__stdio;
+FILE * stdout = &__stdio;
 STDIO_ALIAS(stderr);

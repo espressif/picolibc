@@ -44,7 +44,7 @@ static char                write_buf[__PICOLIBC_STDERR_BUFSIZ];
 static struct __file_bufio __stderr
     = FDEV_SETUP_POSIX(2, write_buf, __PICOLIBC_STDERR_BUFSIZ, __SWR, __BLBF);
 
-FILE * const __posix_stderr = &__stderr.xfile.cfile.file;
+FILE * __posix_stderr = &__stderr.xfile.cfile.file;
 
 __weak_reference(__posix_stderr, stderr);
 

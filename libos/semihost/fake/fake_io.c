@@ -51,5 +51,5 @@ static FILE __stdio = FDEV_SETUP_STREAM(fake_putc, NULL, NULL, _FDEV_SETUP_WRITE
 #define STDIO_ALIAS(x) FILE * const x = &__stdio;
 #endif
 
-FILE * const stdout = &__stdio;
+FILE * stdout = &__stdio;
 STDIO_ALIAS(stderr);

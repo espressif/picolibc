@@ -35,8 +35,8 @@
 #include "../stdlib/mul_overflow.h"
 #endif
 
-extern FILE * const stdin __weak;
-extern FILE * const stdout __weak;
+extern FILE * stdin __weak;
+extern FILE * stdout __weak;
 
 size_t
 fread(void *ptr, size_t size, size_t nmemb, FILE *stream)
