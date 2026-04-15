@@ -348,7 +348,7 @@ int  feof_unlocked(FILE *__stream) __nonnull((1));
 
 /* only mentioned for libstdc++ support, not implemented in library */
 #ifndef BUFSIZ
-#define BUFSIZ 512
+#define BUFSIZ 128
 #endif
 
 /*
