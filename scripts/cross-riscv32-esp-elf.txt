@@ -1,0 +1,15 @@
+[binaries]
+c = ['ccache', 'riscv32-esp-elf-gcc']
+ar = 'riscv32-esp-elf-ar'
+as = 'riscv32-esp-elf-as'
+nm = 'riscv32-esp-elf-nm'
+strip = 'riscv32-esp-elf-strip'
+
+[host_machine]
+system = 'unknown'
+cpu_family = 'riscv32'
+cpu = 'riscv'
+endian = 'little'
+
+[properties]
+skip_sanity_check = true
