@@ -46,4 +46,7 @@ src_semihost += files([
                        'hexagon_write.c',
                        'hexagon_stub.c',
                        'hexagon_isatty.c',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]

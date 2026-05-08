@@ -37,4 +37,7 @@ src_semihost += files([
                        'or1k_stub.c',
                        'or1k_exit.c',
                        'or1k_iob.c',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]

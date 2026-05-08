@@ -45,4 +45,7 @@ src_semihost += files([
                        'm68k_stub.c',
                        'm68k_unlink.c',
                        'm68k_write.c',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]

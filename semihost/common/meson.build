@@ -76,7 +76,10 @@ src_semihost += files([
                        'sys_tmpnam.c',
                        'sys_write.c',
                        'sys_write0.c',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]
 
 inc_headers = ['semihost.h']
 if really_install

@@ -44,4 +44,7 @@ src_semihost += files([
                        'lm32_stub.c',
                        'lm32_unlink.c',
                        'lm32_write.c',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]

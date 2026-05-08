@@ -37,4 +37,7 @@ src_semihost += files([
                        'sparc_stub.c',
                        'sparc_exit.c',
                        'sparc_iob.c',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]

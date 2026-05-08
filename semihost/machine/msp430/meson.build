@@ -37,4 +37,7 @@ src_semihost += files([
                        'msp430-stub.c',
                        'msp430-exit.c',
                        'msp430-iob.c',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]

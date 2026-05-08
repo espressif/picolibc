@@ -38,7 +38,10 @@ src_semihost += files([
                        'e9_io.c',
                        'e9_kill.c',
                        'e9_stub.c',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]
 
 objcopy = find_program('objcopy', required: false)
 

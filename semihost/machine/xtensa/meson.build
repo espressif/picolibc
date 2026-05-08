@@ -44,4 +44,7 @@ src_semihost += files([
                        'xtensa-unlink.c',
                        'xtensa-write.c',
                        'simcall.S',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]

@@ -45,4 +45,7 @@ src_semihost += files([
                        'nios2_stub.c',
                        'nios2_unlink.c',
                        'nios2_write.c',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]

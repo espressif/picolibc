@@ -37,4 +37,7 @@ src_semihost += files([
                        'rx_stub.c',
                        'rx_exit.c',
                        'rx_iob.c',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]

@@ -35,7 +35,12 @@
 
 src_semihost_fake = files([
                            'fake_exit.c',
+                           'fake_fstatvfs.c',
                            'fake_io.c',
                            'fake_kill.c',
+                           'fake_statvfs.c',
                            'fake_stub.c',
                          ])
+
+src_semihost_fake_statvfs = files('fake_statvfs.c')
+src_semihost_fake_fstatvfs = files('fake_fstatvfs.c')

@@ -43,7 +43,10 @@ if cc.get_define('_CALL_ELF') == '1'
                             'powerpc_kill.c',
                             'powerpc_io.c',
                             'powerpc_stub.c',
-                          ])
+                          ]) + [
+    src_semihost_fake_statvfs,
+    src_semihost_fake_fstatvfs,
+    ]
 
   foreach params : targets
     target = params['name']

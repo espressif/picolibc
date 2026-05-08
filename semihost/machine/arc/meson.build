@@ -44,4 +44,7 @@ src_semihost += files([
                        'arc_stub.c',
                        'arc_unlink.c',
                        'arc_write.c',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]

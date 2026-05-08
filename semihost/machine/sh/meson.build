@@ -38,4 +38,7 @@ src_semihost += files([
                        'sh_exit.c',
                        'sh_io.c',
                        'sh_syscall.c',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]

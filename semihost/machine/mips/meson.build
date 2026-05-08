@@ -44,4 +44,7 @@ src_semihost += files([
                        'mips_stub.c',
                        'mips_unlink.c',
                        'mips_write.c',
-                     ])
+                     ]) + [
+  src_semihost_fake_statvfs,
+  src_semihost_fake_fstatvfs,
+  ]
