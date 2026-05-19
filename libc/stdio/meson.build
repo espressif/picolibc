@@ -78,6 +78,7 @@ srcs_stdio = [
   'flockfile.c',
   'flockfile_init.c',
   'fmemopen.c',
+  'open_memstream.c',
   'fopen.c',
   'fprintf.c',
   'fputc.c',

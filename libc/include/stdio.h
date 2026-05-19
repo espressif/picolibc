@@ -409,6 +409,10 @@ FILE    *fopen(const char *path, const char *mode) __malloc_like_with_free(fclos
 FILE    *freopen(const char *path, const char *mode, FILE *stream) __nonnull((3));
 FILE    *fdopen(int, const char *) __malloc_like_with_free(fclose, 1);
 FILE    *fmemopen(void *buf, size_t size, const char *mode) __malloc_like_with_free(fclose, 1);
+#if __POSIX_VISIBLE >= 200809
+FILE *open_memstream(char **bufp, size_t *sizep)
+    __malloc_like_with_free(fclose, 1);
+#endif
 int      fseek(FILE *stream, long offset, int whence) __nonnull((1));
 int      fseeko(FILE *stream, __off_t offset, int whence) __nonnull((1));
 int      fsetpos(FILE *stream, const fpos_t *pos) __nonnull((1));
