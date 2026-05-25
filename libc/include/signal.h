@@ -281,6 +281,9 @@ int sigwaitinfo(const sigset_t *, siginfo_t *);
 #if __MISC_VISIBLE
 int str2sig(const char * __restrict, int * __restrict);
 #endif
+#if __POSIX_VISIBLE >= 199506L
+int pthread_sigmask (int, const sigset_t *, sigset_t *);
+#endif
 
 _END_STD_C
 
