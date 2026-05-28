@@ -75,8 +75,8 @@
 #define __ssp_overlap(a, b, l) (((a) <= (b) && (b) < (a) + (l)) || ((b) <= (a) && (a) < (b) + (l)))
 
 _BEGIN_STD_C
-void __stack_chk_fail(void) __noreturn;
-void __chk_fail(void) __noreturn;
+__noreturn void __stack_chk_fail(void);
+__noreturn void __chk_fail(void);
 void set_fortify_handler(void (*handler)(int sig));
 _END_STD_C
 
