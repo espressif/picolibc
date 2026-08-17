@@ -61,19 +61,20 @@ typedef __WINT_TYPE__ wint_t;
 #endif
 
 #ifndef __machine_blkcnt_t_defined
-typedef __int64_t __blkcnt_t;
+typedef long      __blkcnt_t;
+typedef __int64_t __blkcnt64_t;
 #endif
 
 #ifndef __machine_blksize_t_defined
-typedef __int32_t __blksize_t;
+typedef long __blksize_t;
 #endif
 
 #ifndef __machine_fsblkcnt_t_defined
-typedef __uint64_t __fsblkcnt_t;
+typedef unsigned long __fsblkcnt_t;
 #endif
 
 #ifndef __machine_fsfilcnt_t_defined
-typedef __uint64_t __fsfilcnt_t;
+typedef unsigned long __fsfilcnt_t;
 #endif
 
 #ifndef __machine_off_t_defined
@@ -81,7 +82,6 @@ typedef __int64_t __off_t;
 #endif
 
 #ifndef __machine_pid_t_defined
-/* Return value from fork(2), which gcc "knows" is int */
 typedef int __pid_t;
 #endif
 
@@ -102,19 +102,27 @@ typedef __uint32_t __id_t;
 #endif
 
 #ifndef __machine_ino_t_defined
-typedef __uint64_t __ino_t;
+typedef unsigned long __ino_t;
 #endif
+
+typedef __uint64_t __ino64_t;
 
 #ifndef __machine_mode_t_defined
-typedef __uint32_t __mode_t;
+typedef unsigned int __mode_t;
 #endif
 
+typedef __int64_t __off64_t;
+
 #ifndef __machine_key_t_defined
-typedef __int32_t __key_t;
+typedef long __key_t;
 #endif
 
 #ifndef __machine_fpos_t_defined
 typedef __off_t __fpos_t;
+#endif
+
+#ifndef __machine_fpos64_t_defined
+typedef __off64_t __fpos64_t;
 #endif
 
 #ifndef __machine_rlim_t_defined
@@ -176,7 +184,7 @@ typedef struct __iconv_t *_iconv_t;
 #endif
 
 #ifndef __machine_clock_t_defined
-typedef __uint64_t __clock_t;
+typedef unsigned long __clock_t;
 #endif
 
 #ifndef __machine_time_t_defined
@@ -185,6 +193,10 @@ typedef __int64_t __time_t;
 
 #ifndef __machine_clockid_t_defined
 typedef unsigned long __clockid_t;
+#endif
+
+#ifndef __machine_daddr_t_defined
+typedef long __daddr_t;
 #endif
 
 #ifndef __machine_timer_t_defined
@@ -199,10 +211,10 @@ typedef __uint8_t __sa_family_t;
 typedef __uint32_t __socklen_t;
 #endif
 
-typedef __int32_t  __nl_item;
-typedef __uint64_t __nlink_t;
-typedef __int32_t  __suseconds_t; /* microseconds (signed) */
-typedef __uint32_t __useconds_t;  /* microseconds (unsigned) */
+typedef __int32_t      __nl_item;
+typedef unsigned short __nlink_t;
+typedef long           __suseconds_t; /* microseconds (signed) */
+typedef unsigned long  __useconds_t;  /* microseconds (unsigned) */
 
 #ifdef __STDC_WANT_LIB_EXT1__
 #if (__STDC_WANT_LIB_EXT1__ != 0) && (__STDC_WANT_LIB_EXT1__ != 1)

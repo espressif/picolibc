@@ -139,6 +139,8 @@ typedef __time_t time_t;
 #define _TIME_T_DECLARED
 #endif
 
+typedef __daddr_t daddr_t;
+
 #ifndef __caddr_t_defined
 typedef char *caddr_t;
 #define __caddr_t_defined
