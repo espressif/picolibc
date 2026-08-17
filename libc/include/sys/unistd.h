@@ -58,6 +58,11 @@ typedef __off_t off_t;
 #define _OFF_T_DECLARED
 #endif
 
+#ifndef _OFF64_T_DECLARED
+typedef __off64_t off64_t; /* 64-bit file offset */
+#define _OFF64_T_DECLARED
+#endif
+
 #ifndef _UID_T_DECLARED
 typedef __uid_t uid_t; /* user id */
 #define _UID_T_DECLARED
@@ -305,6 +310,10 @@ extern __picolibc_export int   optreset; /* getopt(3) external variable */
 
 #if __BSD_VISIBLE || (__XSI_VISIBLE >= 4 && __POSIX_VISIBLE < 200809)
 pid_t vfork(void) __picolibc_export;
+#endif
+
+#if __LARGEFILE64_VISIBLE
+__off64_t lseek64(int __filedes, __off64_t __offset, int __whence);
 #endif
 
 #if __POSIX_VISIBLE >= 200112 || __XSI_VISIBLE >= 500
