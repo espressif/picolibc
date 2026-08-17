@@ -6,6 +6,7 @@ srcs_nosys = [
     'close.c',
     'closedir.c',
     'environ.c',
+    'errno.c',
     'execve.c',
     'fcntl.c',
     'fork.c',
