@@ -48,3 +48,9 @@ lseek(int fd, off_t offset, int whence)
     lm32_scall(&args, &ret);
     return (off_t)ret.r1;
 }
+
+off64_t
+lseek64(int fd, off64_t offset, int whence)
+{
+    return (off64_t)lseek(fd, (off_t)offset, whence);
+}

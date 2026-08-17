@@ -49,3 +49,9 @@ lseek(int fd, off_t offset, int whence)
     uint32_t b = offset;
     return m68k_semihost4_64(HOSTED_LSEEK, fd, a, b, whence);
 }
+
+off64_t
+lseek64(int fd, off64_t offset, int whence)
+{
+    return (off64_t)lseek(fd, (off_t)offset, whence);
+}

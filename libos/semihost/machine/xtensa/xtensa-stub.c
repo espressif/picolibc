@@ -36,6 +36,12 @@
 #define _GNU_SOURCE
 #include "xtensa-semihost.h"
 
+off64_t
+lseek64(int fd, off64_t offset, int whence)
+{
+    return (off64_t)lseek(fd, (off_t)offset, whence);
+}
+
 int
 fstat(int fd, struct stat *sbuf)
 {

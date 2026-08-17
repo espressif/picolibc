@@ -41,6 +41,7 @@ target_sources(semihost PRIVATE
   gettimeofday.c
   isatty.c
   lseek.c
+  lseek64.c
   mapstdio.c
   open.c
   read.c

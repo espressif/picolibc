@@ -71,3 +71,9 @@ lseek(int fd, off_t offset, int whence)
     int retval = hexagon_semihost(SYS_SEEK, args);
     return retval;
 }
+
+off64_t
+lseek64(int fd, off64_t offset, int whence)
+{
+    return (off64_t)lseek(fd, (off_t)offset, whence);
+}

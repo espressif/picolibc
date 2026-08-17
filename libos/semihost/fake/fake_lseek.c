@@ -47,6 +47,12 @@ lseek(int fd, off_t offset, int whence)
     return (off_t)-1;
 }
 
+off64_t
+lseek64(int fd, off64_t offset, int whence)
+{
+    return (off64_t)lseek(fd, (off_t)offset, whence);
+}
+
 #ifdef __strong_reference
 __strong_reference(lseek, __fake_lseek);
 #endif
