@@ -105,9 +105,13 @@ __hash_open(const char *file, int flags, int mode, int dflags,
     HTAB *hashp;
 
     (void)dflags;
+#ifdef __USE_INTERNAL_STAT64
+    struct stat64 statbuf;
+#else
     struct stat statbuf;
-    DB         *dbp;
-    int         bpages, hdrsize, new_table, nsegs, save_errno;
+#endif
+    DB *dbp;
+    int bpages, hdrsize, new_table, nsegs, save_errno;
 
     if ((flags & O_ACCMODE) == O_WRONLY) {
         errno = EINVAL;
@@ -127,7 +131,12 @@ __hash_open(const char *file, int flags, int mode, int dflags,
     hashp->flags = flags;
 
     new_table = 0;
-    if (!file || (flags & O_TRUNC) || (stat(file, &statbuf) && (errno == ENOENT))) {
+    if (!file || (flags & O_TRUNC) ||
+#ifdef __USE_INTERNAL_STAT64
+        (stat64(file, &statbuf) && (errno == ENOENT))) {
+#else
+        (stat(file, &statbuf) && (errno == ENOENT))) {
+#endif
         if (errno == ENOENT)
             errno = 0; /* Just in case someone looks at errno */
         new_table = 1;
@@ -138,7 +147,12 @@ __hash_open(const char *file, int flags, int mode, int dflags,
 
         /* if the .db file is empty, and we had permission to create
            a new .db file, then reinitialize the database */
-        if ((flags & O_CREAT) && fstat(hashp->fp, &statbuf) == 0 && statbuf.st_size == 0)
+        if ((flags & O_CREAT) &&
+#ifdef __USE_INTERNAL_STAT64
+            fstat64(hashp->fp, &statbuf) == 0 && statbuf.st_size == 0)
+#else
+            fstat(hashp->fp, &statbuf) == 0 && statbuf.st_size == 0)
+#endif
             new_table = 1;
 
 #ifdef __HAVE_FCNTL
@@ -282,8 +296,12 @@ hash_fd(const DB *dbp)
 static HTAB *
 init_hash(HTAB *hashp, const char *file, const HASHINFO *info)
 {
+#ifdef __USE_INTERNAL_STAT64
+    struct stat64 statbuf;
+#else
     struct stat statbuf;
-    int         nelem;
+#endif
+    int nelem;
 
     nelem = 1;
     hashp->NKEYS = 0;
@@ -300,7 +318,11 @@ init_hash(HTAB *hashp, const char *file, const HASHINFO *info)
 
     /* Fix bucket size to be optimal for file system */
     if (file != NULL) {
+#ifdef __USE_INTERNAL_STAT64
+        if (stat64(file, &statbuf))
+#else
         if (stat(file, &statbuf))
+#endif
             return (NULL);
         hashp->BSIZE = MIN(statbuf.st_blksize, MAX_BSIZE);
         hashp->BSHIFT = __log2(hashp->BSIZE);
