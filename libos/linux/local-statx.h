@@ -43,5 +43,6 @@
 #include <sys/stat.h>
 
 int _statbuf(struct stat *statbuf, const struct __kernel_statx *statxbuf);
+int _statbuf64(struct stat64 *statbuf, const struct __kernel_statx *statxbuf);
 
 #endif /* _LOCAL_STATX_H_ */
