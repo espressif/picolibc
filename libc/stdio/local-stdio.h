@@ -214,7 +214,7 @@ bufio_close(struct __file_bufio *bf)
     return ret;
 }
 
-#if defined(__FSTAT_BUFSIZ)
+#if defined(__FSTAT_BUFSIZ) && defined(_STAT_HAS_ST_BLKSIZE)
 static inline size_t
 bufio_get_buf_size(int fd)
 {
