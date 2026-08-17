@@ -37,4 +37,19 @@
 
 #ifndef __PICOLIBC_ERRNO_FUNCTION
 __THREAD_LOCAL_ERRNO int errno;
+#elif !defined(__USE_SYSTEM_LIBC)
+/*
+ * The operating system is expected to provide this accessor. Define a weak
+ * fallback so that libc remains self-contained at link time; without one,
+ * every link that pulls in a libc function touching errno fails unless the
+ * OS is present. Toolchain builds rely on such links succeeding when probing
+ * target capabilities.
+ */
+static __THREAD_LOCAL_ERRNO int __picolibc_errno;
+
+__weak int *
+__PICOLIBC_ERRNO_FUNCTION(void)
+{
+    return &__picolibc_errno;
+}
 #endif
