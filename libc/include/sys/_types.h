@@ -29,7 +29,7 @@ SUCH DAMAGE.
 /* ANSI C namespace clean utility typedefs */
 
 /* This file defines various typedefs needed by the system calls that support
-   the C library.  Basically, they're just the POSIX versions with a '__'
+   the C library.  Basically, they're just the POSIX versions with an '_'
    prepended.  Targets shall use <machine/_types.h> to define their own
    internal types if desired.
 
@@ -40,8 +40,8 @@ SUCH DAMAGE.
    <machine/_types.h> to disable a default definition in <sys/_types.h>. It
    must not be used in other files.
 
-   User type definitions are guarded by _XYZ_T_DEFINED in each header defining
-   xyz_t.
+   User type definitions are guarded by __xyz_t_defined in glibc and
+   _XYZ_T_DECLARED in BSD compatible systems.
 */
 
 #ifndef _SYS__TYPES_H
@@ -51,14 +51,14 @@ SUCH DAMAGE.
 #define __need_wint_t
 #include <stddef.h>
 
-#include <machine/_types.h>
-
 /* The Arm Compiler doesn't define wint_t as part of stddef.h so
  * define it here.
  */
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100)
 typedef __WINT_TYPE__ wint_t;
 #endif
+
+#include <machine/_types.h>
 
 #ifndef __machine_blkcnt_t_defined
 typedef long      __blkcnt_t;
@@ -70,31 +70,48 @@ typedef long __blksize_t;
 #endif
 
 #ifndef __machine_fsblkcnt_t_defined
-typedef unsigned long __fsblkcnt_t;
+typedef __uint64_t __fsblkcnt_t;
 #endif
 
 #ifndef __machine_fsfilcnt_t_defined
-typedef unsigned long __fsfilcnt_t;
+typedef __uint32_t __fsfilcnt_t;
 #endif
 
 #ifndef __machine_off_t_defined
-typedef __int64_t __off_t;
+#if __SIZEOF_SIZE_T__ == 8 && __SIZEOF_LONG__ < 8
+typedef __uint64_t _off_t;
+#else
+typedef long _off_t;
+#endif
 #endif
 
-#ifndef __machine_pid_t_defined
+#if defined(__XMK__)
+typedef signed char __pid_t;
+#else
 typedef int __pid_t;
 #endif
 
 #ifndef __machine_dev_t_defined
+#ifdef __linux
 typedef __uint64_t __dev_t;
+#else
+typedef short __dev_t;
+#endif
 #endif
 
 #ifndef __machine_uid_t_defined
+#ifdef __linux
 typedef __uint32_t __uid_t;
+#else
+typedef unsigned short __uid_t;
 #endif
-
+#endif
 #ifndef __machine_gid_t_defined
+#ifdef __linux
 typedef __uint32_t __gid_t;
+#else
+typedef unsigned short __gid_t;
+#endif
 #endif
 
 #ifndef __machine_id_t_defined
@@ -102,28 +119,55 @@ typedef __uint32_t __id_t;
 #endif
 
 #ifndef __machine_ino_t_defined
+#if (defined(__i386__) && (defined(GO32) || defined(__MSDOS__))) || defined(__sparc__) \
+    || defined(__SPU__) || defined(__linux)
 typedef unsigned long __ino_t;
+#else
+typedef unsigned short __ino_t;
 #endif
-
 typedef __uint64_t __ino64_t;
+#endif
 
 #ifndef __machine_mode_t_defined
-typedef unsigned int __mode_t;
+#if defined(__i386__) && (defined(GO32) || defined(__MSDOS__))
+typedef int __mode_t;
+#else
+#if defined(__sparc__) && !defined(__sparc_v9__)
+#ifdef __svr4__
+typedef unsigned long __mode_t;
+#else
+typedef unsigned short __mode_t;
+#endif
+#else
+typedef __uint32_t __mode_t;
+#endif
+#endif
 #endif
 
-typedef __int64_t __off64_t;
+#ifndef __machine_off64_t_defined
+__extension__ typedef long long _off64_t;
+#endif
+
+typedef _off_t     __off_t;
+typedef _off64_t   __off64_t;
+
+typedef _off64_t   __loff_t;
 
 #ifndef __machine_key_t_defined
 typedef long __key_t;
 #endif
 
 #ifndef __machine_fpos_t_defined
-typedef __off_t __fpos_t;
+typedef long _fpos_t; /* XXX must match off_t in <sys/types.h> */
+/* (and must be `long' for now) */
 #endif
 
 #ifndef __machine_fpos64_t_defined
-typedef __off64_t __fpos64_t;
+typedef _off64_t _fpos64_t;
 #endif
+
+typedef _fpos_t   __fpos_t;
+typedef _fpos64_t __fpos64_t;
 
 #ifndef __machine_rlim_t_defined
 typedef __uint64_t __rlim_t;
@@ -150,19 +194,21 @@ typedef unsigned long __size_t;
    We simply change "unsigned" to "signed" for this single definition
    to make sure ssize_t and size_t only differ by their signedness. */
 #define unsigned signed
-typedef __SIZE_TYPE__ __ssize_t;
+typedef __SIZE_TYPE__ _ssize_t;
 #undef unsigned
 #define __SSIZE_MAX__ ((__ssize_t)(__SIZE_MAX__ >> 1))
 #else
 #if defined(__INT_MAX__) && __INT_MAX__ == 2147483647
-typedef int __ssize_t;
+typedef int _ssize_t;
 #define __SSIZE_MAX__ __INT_MAX__
 #else
-typedef long __ssize_t;
+typedef long _ssize_t;
 #define __SSIZE_MAX__ __LONG_MAX__
 #endif
 #endif
 #endif
+
+typedef _ssize_t __ssize_t;
 
 #ifndef __machine_mbstate_t_defined
 /* Conversion state information.  */
@@ -174,8 +220,10 @@ typedef struct {
         __uint32_t    __ucs;
         __uint16_t    __ucs2;
     } __value; /* Value so far.  */
-} __mbstate_t;
+} _mbstate_t;
 #endif
+
+typedef _mbstate_t __mbstate_t;
 
 #ifndef __machine_iconv_t_defined
 /* Iconv descriptor type */
@@ -184,24 +232,30 @@ typedef struct __iconv_t *_iconv_t;
 #endif
 
 #ifndef __machine_clock_t_defined
-typedef unsigned long __clock_t;
+#define _CLOCK_T_ unsigned long /* clock() */
 #endif
 
-#ifndef __machine_time_t_defined
-typedef __int64_t __time_t;
+typedef _CLOCK_T_ __clock_t;
+
+#if __SIZEOF_LONG__ == 8
+#define _TIME_T_ long
+#else
+#define _TIME_T_ __int_least64_t
 #endif
+typedef _TIME_T_ __time_t;
 
 #ifndef __machine_clockid_t_defined
-typedef unsigned long __clockid_t;
+#define _CLOCKID_T_ unsigned long
 #endif
+
+typedef _CLOCKID_T_ __clockid_t;
 
 #ifndef __machine_daddr_t_defined
 typedef long __daddr_t;
 #endif
 
-#ifndef __machine_timer_t_defined
-typedef unsigned long __timer_t;
-#endif
+#define _TIMER_T_ unsigned long
+typedef _TIMER_T_ __timer_t;
 
 #ifndef __machine_sa_family_t_defined
 typedef __uint8_t __sa_family_t;
@@ -225,11 +279,12 @@ typedef unsigned long  __useconds_t;  /* microseconds (unsigned) */
 #ifndef __STDC_LIB_EXT1__
 #define __STDC_LIB_EXT1__ 1
 #endif
+
+typedef size_t __rsize_t;
+typedef int    __errno_t;
 #endif
 #endif
 
-typedef __size_t   __rsize_t;
-typedef int        __errno_t;
 typedef __uint16_t __wctype_t;
 
 #define __NAME_MAX 255

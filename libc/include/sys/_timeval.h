@@ -37,7 +37,7 @@ typedef __suseconds_t suseconds_t;
 #endif
 
 #ifndef _TIME_T_DECLARED
-typedef __time_t time_t;
+typedef _TIME_T_ time_t;
 #define _TIME_T_DECLARED
 #endif
 

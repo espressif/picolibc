@@ -38,7 +38,8 @@
 static mbstate_t mbrtoc16_state;
 
 size_t
-mbrtoc16(char16_t * __restrict pc16, const char * __restrict s, size_t n, mbstate_t * __restrict ps)
+mbrtoc16(char16_t * __restrict pc16, const char * __restrict s, size_t n,
+         _mbstate_t * __restrict ps)
 {
     if (ps == NULL)
         ps = &mbrtoc16_state;

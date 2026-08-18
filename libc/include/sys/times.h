@@ -35,7 +35,7 @@ SUCH DAMAGE.
 _BEGIN_STD_C
 
 #ifndef _CLOCK_T_DECLARED
-typedef __clock_t clock_t;
+typedef _CLOCK_T_ clock_t;
 #define _CLOCK_T_DECLARED
 #endif
 
