@@ -58,19 +58,19 @@ fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream)
             /* Small writes go through the buffer. */
             while (bytes) {
                 int this_time = bf->size - bf->len;
-                if (this_time == 0) {
-                    int ret = __bufio_flush_locked(stream);
-                    if (ret) {
-                        stream->flags |= ret;
-                        break;
-                    }
-                }
                 if ((unsigned)this_time > bytes)
                     this_time = bytes;
                 memcpy(bf->buf + bf->len, cp, this_time);
                 bf->len += this_time;
                 cp += this_time;
                 bytes -= this_time;
+                if (bf->len >= bf->size) {
+                    int ret = __bufio_flush_locked(stream);
+                    if (ret) {
+                        stream->flags |= ret;
+                        break;
+                    }
+                }
             }
         } else {
             /* Large writes go direct. */

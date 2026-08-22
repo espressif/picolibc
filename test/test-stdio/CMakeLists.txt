@@ -38,6 +38,7 @@ set(tests
   test-fopencookie
   test-open_memstream
   test-funopen
+  test-fwrite-fast-path
   test-put
   test-printf
   test-printf-scanf

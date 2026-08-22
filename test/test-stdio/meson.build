@@ -40,6 +40,7 @@ tests = [
   'test-freopen',
   'test-fopencookie',
   'test-funopen',
+  'test-fwrite-fast-path',
   'test-put',
   'test-sprintf-percent-n',
   'test-sprintf-s',
