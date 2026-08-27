@@ -149,7 +149,7 @@ __extension__ typedef long long _off64_t;
 #endif
 
 typedef _off_t     __off_t;
-typedef __uint64_t __off64_t;
+typedef _off64_t   __off64_t;
 
 typedef _off64_t   __loff_t;
 
