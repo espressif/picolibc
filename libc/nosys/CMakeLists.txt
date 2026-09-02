@@ -6,6 +6,7 @@ picolibc_sources(
   close.c
   closedir.c
   environ.c
+  errno.c
   execve.c
   fcntl.c
   fork.c
