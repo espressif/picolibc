@@ -18,6 +18,7 @@ __PICOLIBC_ERRNO_FUNCTION(void)
 #define ERRNO_FN_STR(x) _ERRNO_FN_STR(x)
 #define LINK_WARNING_X(sym, msg) link_warning(sym, msg)
 LINK_WARNING_X(__PICOLIBC_ERRNO_FUNCTION,
-	       ERRNO_FN_STR(__PICOLIBC_ERRNO_FUNCTION)
-	       " is implemented in libnosys and may not work correctly")
+		ERRNO_FN_STR(__PICOLIBC_ERRNO_FUNCTION)
+		" is a libnosys fallback using a private errno;"
+		" provide a strong definition that returns the OS errno address")
 #endif
