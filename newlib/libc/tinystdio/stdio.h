@@ -153,9 +153,26 @@ typedef __FILE FILE;
 #define PICOLIBC_STDIO_QUALIFIER const
 #endif
 
-extern FILE *PICOLIBC_STDIO_QUALIFIER stdin;
-extern FILE *PICOLIBC_STDIO_QUALIFIER stdout;
-extern FILE *PICOLIBC_STDIO_QUALIFIER stderr;
+/* With _WANT_THREAD_LOCAL_STDIO each thread has its own stdin, stdout and
+ * stderr, starting out as the values they are initialized with. */
+#ifdef _WANT_THREAD_LOCAL_STDIO
+#define PICOLIBC_STDIO_STORAGE NEWLIB_THREAD_LOCAL
+#else
+#define PICOLIBC_STDIO_STORAGE
+#endif
+
+/* Weak references to the streams let code test whether they exist. A weak
+ * thread-local variable has no address to test, so with thread-local streams
+ * they are ordinary references and the streams must be defined. */
+#ifdef _WANT_THREAD_LOCAL_STDIO
+#define PICOLIBC_STDIO_WEAK
+#else
+#define PICOLIBC_STDIO_WEAK _ATTRIBUTE((__weak__))
+#endif
+
+extern PICOLIBC_STDIO_STORAGE FILE *PICOLIBC_STDIO_QUALIFIER stdin;
+extern PICOLIBC_STDIO_STORAGE FILE *PICOLIBC_STDIO_QUALIFIER stdout;
+extern PICOLIBC_STDIO_STORAGE FILE *PICOLIBC_STDIO_QUALIFIER stderr;
 
 /* The stdin, stdout, and stderr symbols are described as macros in the C
  * standard. */

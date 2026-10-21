@@ -35,4 +35,4 @@
 
 #include "stdio_private.h"
 
-FILE *stdout;
+PICOLIBC_STDIO_STORAGE FILE *stdout;

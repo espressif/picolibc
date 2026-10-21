@@ -66,12 +66,13 @@ dummy_flush(FILE *file)
 
 static FILE __stdio = FDEV_SETUP_STREAM(dummy_putc, dummy_getc, dummy_flush, _FDEV_SETUP_RW);
 
-#ifdef __strong_reference
+/* Thread-local streams are three variables: an alias would make them one. */
+#if defined(__strong_reference) && !defined(_WANT_THREAD_LOCAL_STDIO)
 #define STDIO_ALIAS(x) __strong_reference(stdin, x);
 #else
-#define STDIO_ALIAS(x) FILE *PICOLIBC_STDIO_QUALIFIER x = &__stdio;
+#define STDIO_ALIAS(x) PICOLIBC_STDIO_STORAGE FILE *PICOLIBC_STDIO_QUALIFIER x = &__stdio;
 #endif
 
-FILE *PICOLIBC_STDIO_QUALIFIER stdin = &__stdio;
+PICOLIBC_STDIO_STORAGE FILE *PICOLIBC_STDIO_QUALIFIER stdin = &__stdio;
 STDIO_ALIAS(stdout);
 STDIO_ALIAS(stderr);

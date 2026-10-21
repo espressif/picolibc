@@ -501,6 +501,11 @@ if thread_local_storage
   tls_model_spec = '%{!ftls-model:-ftls-model=' + get_option('tls-model') + '}'
 endif
 
+thread_local_stdio = tinystdio and get_option('thread-local-stdio')
+if thread_local_stdio and not thread_local_storage
+  error('thread-local-stdio needs thread-local-storage')
+endif
+
 # specs_prefix_format must point to the toolchain's root directory
 if sysroot_install
   sysroot = run_command(cc.cmd_array() + ['-print-sysroot'], check : true).stdout().split('\n')[0]
@@ -1303,7 +1308,8 @@ conf_data.set('_WANT_IO_LONG_DOUBLE', io_long_double)
 conf_data.set('_ASSERT_VERBOSE', get_option('assert-verbose'))
 
 if tinystdio
-    conf_data.set('_WANT_MUTABLE_STDIO', mutable_stdio)
+    conf_data.set('_WANT_MUTABLE_STDIO', mutable_stdio or thread_local_stdio)
+    conf_data.set('_WANT_THREAD_LOCAL_STDIO', thread_local_stdio)
     conf_data.set('_WANT_FLOCKFILE', flockfile)
 endif
 

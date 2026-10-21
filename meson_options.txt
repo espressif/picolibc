@@ -177,6 +177,8 @@ option('minimal-io-long-long', type: 'boolean', value: false,
        description: 'enable long long type support in minimal printf/scanf')
 option('mutable-stdio', type: 'boolean', value: false,
        description: 'disable const qualifier for stdin/stdout/stderr variables')
+option('thread-local-stdio', type: 'boolean', value: false,
+       description: 'make stdin/stdout/stderr thread-local variables (implies mutable-stdio, needs thread-local-storage)')
 option('flockfile', type: 'boolean', value: false,
        description: 'enable thread-safe mode for stream functions')
 
